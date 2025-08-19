@@ -39,20 +39,41 @@ Esta é uma API RESTful construída com Fastify e TypeScript para gerenciamento 
 ## 🏗️ Arquitetura
 
 ```mermaid
-graph LR
-    subgraph Fluxo da Aplicação
-        A[GitHub] -->|criar bloco de código| B[Mermaid]
-        B -->|informar tipo do diagrama| C[Bloco]
-        C -->|montar diagrama| D[Conteúdo]
-        D -->|terminar diagrama| C
-        C -->|fechar bloco| B
-        B -->|visualizar diagrama| A
+graph TD
+    Client[Cliente HTTP] -->|Requisição| Server[Servidor Fastify]
+
+    subgraph Rotas
+        Server -->|POST /courses| Create[Criar Curso]
+        Server -->|GET /courses| List[Listar Cursos]
+        Server -->|GET /courses/:id| GetById[Buscar por ID]
     end
 
-    style A fill:#2D333B,stroke:#30363D,stroke-width:2px
-    style B fill:#2D333B,stroke:#30363D,stroke-width:2px
-    style C fill:#2D333B,stroke:#30363D,stroke-width:2px
-    style D fill:#2D333B,stroke:#30363D,stroke-width:2px
+    subgraph Validação
+        Create -->|Zod Schema| ValidateCreate[Valida Dados]
+        GetById -->|Zod Schema| ValidateId[Valida UUID]
+    end
+
+    subgraph Banco de Dados
+        ValidateCreate -->|Drizzle ORM| DB[(PostgreSQL)]
+        ValidateId -->|Drizzle ORM| DB
+        List -->|Drizzle ORM| DB
+    end
+
+    subgraph Respostas
+        DB -->|Sucesso| Success[HTTP 200/201]
+        DB -->|Não Encontrado| NotFound[HTTP 404]
+        DB -->|Erro| Error[HTTP 500]
+    end
+
+    subgraph Documentação
+        Server -->|OpenAPI| Swagger[Swagger UI]
+        Server -->|OpenAPI| Scalar[Scalar Docs]
+    end
+
+    style Server fill:#1a1a1a,stroke:#333,stroke-width:2px
+    style DB fill:#336791,stroke:#333,stroke-width:2px
+    style Swagger fill:#85ea2d,stroke:#333,stroke-width:2px
+    style Scalar fill:#ff6b6b,stroke:#333,stroke-width:2px
 ```
 
 ## 🚀 Como Iniciar
