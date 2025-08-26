@@ -15,6 +15,48 @@
       "when": 1755366624552,
       "tag": "0001_dry_shinobi_shaw",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1755711108399,
+      "tag": "0002_salty_mulholland_black",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1755711263266,
+      "tag": "0003_violet_virginia_dare",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1755733685744,
+      "tag": "0004_known_cammi",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1755734649641,
+      "tag": "0005_fast_next_avengers",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1756143675669,
+      "tag": "0006_mushy_mikhail_rasputin",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1756143751120,
+      "tag": "0007_sleepy_squadron_supreme",
+      "breakpoints": true
     }
   ]
 }
