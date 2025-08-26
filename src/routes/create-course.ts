@@ -10,9 +10,7 @@ export const createCourseRoute: FastifyPluginAsyncZod = async (server) => {
     {
       schema: {
         tags: ["Courses"],
-
         summary: "Create a course",
-
         description:
           "Recebe um título e uma descrição, cria um curso e retorna seu id",
 
@@ -34,21 +32,26 @@ export const createCourseRoute: FastifyPluginAsyncZod = async (server) => {
     async (request, reply) => {
       const { title, description } = request.body;
 
-      const [course] = await db
-        .insert(coursesTable)
-        .values({
-          title,
-          description,
-        })
-        .returning();
+      try {
+        const result = await db
+          .insert(coursesTable)
+          .values({
+            title,
+            description,
+          })
+          .returning();
 
-      if (!course) {
-        return reply
-          .status(500)
-          .send({ message: "Não foi possível criar o curso." });
+        if (!result[0]) {
+          return reply
+            .status(500)
+            .send({ message: "Não foi possível criar o curso." });
+        }
+
+        return reply.status(201).send({ courseId: result[0].id });
+      } catch (error) {
+        console.log(error);
+        return reply.status(500).send({ message: "erro ao criar curso" });
       }
-
-      return reply.status(201).send({ courseId: course.id });
     }
   );
 };

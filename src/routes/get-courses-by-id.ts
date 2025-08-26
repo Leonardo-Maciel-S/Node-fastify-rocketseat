@@ -28,7 +28,9 @@ export const getCoursesByIdRoute: FastifyPluginAsyncZod = async (server) => {
               }),
             })
             .describe("Retorna um objeto contendo um curso."),
-          404: z.null(),
+          404: z.object({
+            message: z.string(),
+          }),
         },
       },
     },
@@ -40,9 +42,12 @@ export const getCoursesByIdRoute: FastifyPluginAsyncZod = async (server) => {
         .from(coursesTable)
         .where(eq(coursesTable.id, id));
 
-      if (!(result.length > 0)) {
-        return reply.status(404);
+      console.log(result.length);
+
+      if (result.length === 0) {
+        return reply.status(404).send({ message: "Not Found" });
       }
+
       return reply.status(200).send({ course: result[0] });
     }
   );
